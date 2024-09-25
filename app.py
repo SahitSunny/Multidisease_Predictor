@@ -35,19 +35,19 @@ if selected == 'Diabetes Prediction':
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        Pregnancies = st.text_input('Number of Pregnancies')
-        SkinThickness = st.text_input('Skin Thickness value')
+        Pregnancies = st.text_input('Number of Pregnancies', 10)
+        SkinThickness = st.text_input('Skin Thickness value', 45)
         DiabetesPedigreeFunction = st.text_input(
-            'Diabetes Pedigree Function value')
+            'Diabetes Pedigree Function value', 1.5)
 
     with col2:
-        Glucose = st.text_input('Glucose Level')
-        Insulin = st.text_input('Insulin Level')
-        Age = st.text_input('Age of the Person')
+        Glucose = st.text_input('Glucose Level',175)
+        Insulin = st.text_input('Insulin Level', 300)
+        Age = st.text_input('Age of the Person', 60)
 
     with col3:
-        BloodPressure = st.text_input('Blood Pressure value')
-        BMI = st.text_input('BMI value')
+        BloodPressure = st.text_input('Blood Pressure value', 100)
+        BMI = st.text_input('BMI value', 50)
 
     diab_diagnosis = ''
 
@@ -76,23 +76,23 @@ if selected == 'Heart Disease Prediction':
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        age = st.text_input('Age')
-        trestbps = st.text_input('Resting Blood Pressure')
-        restecg = st.text_input('Resting Electrocardiographic results')
-        oldpeak = st.text_input('ST depression induced by exercise')
+        age = st.text_input('Age',63)
+        trestbps = st.text_input('Resting Blood Pressure', 145)
+        restecg = st.text_input('Resting Electrocardiographic results', 0)
+        oldpeak = st.text_input('ST depression induced by exercise', 2.3)
         thal = st.text_input(
-            'thal: 0 = normal; 1 = fixed defect; 2 = reversable defect')
+            'thal: 0 = normal; 1 = fixed defect; 2 = reversable defect', 1)
 
     with col2:
-        sex = st.text_input('Sex')
-        chol = st.text_input('Serum Cholestoral in mg/dl')
-        thalach = st.text_input('Maximum Heart Rate achieved')
-        slope = st.text_input('Slope of the peak exercise ST segment')
+        sex = st.text_input('Sex', 1)
+        chol = st.text_input('Serum Cholestoral in mg/dl', 233)
+        thalach = st.text_input('Maximum Heart Rate achieved', 150)
+        slope = st.text_input('Slope of the peak exercise ST segment', 0)
     with col3:
-        cp = st.text_input('Chest Pain types')
-        fbs = st.text_input('Fasting Blood Sugar > 120 mg/dl')
-        exang = st.text_input('Exercise Induced Angina')
-        ca = st.text_input('Major vessels colored by flourosopy')
+        cp = st.text_input('Chest Pain types', 3)
+        fbs = st.text_input('Fasting Blood Sugar > 120 mg/dl', 1)
+        exang = st.text_input('Exercise Induced Angina', 0)
+        ca = st.text_input('Major vessels colored by flourosopy', 0)
 
 
     heart_diagnosis = ''
@@ -109,10 +109,10 @@ if selected == 'Heart Disease Prediction':
 
         if heart_prediction[0] == 1:
             heart_diagnosis = 'The person is having heart disease'
-            st.error(heart_prediction)
+            st.error(heart_diagnosis)
         else:
             heart_diagnosis = 'The person does not have any heart disease'
-            st.success(heart_prediction)
+            st.success(heart_diagnosis)
 
 
 if selected == "Parkinsons Prediction":
@@ -123,36 +123,36 @@ if selected == "Parkinsons Prediction":
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        fo = st.text_input('MDVP:Fo(Hz)')
-        RAP = st.text_input('MDVP:RAP')
-        APQ3 = st.text_input('Shimmer:APQ3')
-        HNR = st.text_input('HNR')
-        D2 = st.text_input('D2')
+        fo = st.text_input('MDVP:Fo(Hz)',119.992)
+        RAP = st.text_input('MDVP:RAP',0.00370)
+        APQ3 = st.text_input('Shimmer:APQ3',0.06545)
+        HNR = st.text_input('HNR',21.033)
+        D2 = st.text_input('D2',2.301442)
 
     with col2:
-        fhi = st.text_input('MDVP:Fhi(Hz)')
-        PPQ = st.text_input('MDVP:PPQ')
-        APQ5 = st.text_input('Shimmer:APQ5')
-        RPDE = st.text_input('RPDE')
-        PPE = st.text_input('PPE')
+        fhi = st.text_input('MDVP:Fhi(Hz)',157.302	)
+        PPQ = st.text_input('MDVP:PPQ',0.00554)
+        APQ5 = st.text_input('Shimmer:APQ5',0.02211)
+        RPDE = st.text_input('RPDE',0.414783)
+        PPE = st.text_input('PPE',0.284654)
 
     with col3:
-        flo = st.text_input('MDVP:Flo(Hz)')
-        DDP = st.text_input('Jitter:DDP')
-        APQ = st.text_input('MDVP:APQ')
-        DFA = st.text_input('DFA')
+        flo = st.text_input('MDVP:Flo(Hz)',74.997)
+        DDP = st.text_input('Jitter:DDP',0.01109)
+        APQ = st.text_input('MDVP:APQ',21.033)
+        DFA = st.text_input('DFA',0.815285)
 
     with col4:
-        Jitter_percent = st.text_input('MDVP:Jitter(%)')
-        Shimmer = st.text_input('MDVP:Shimmer')
-        DDA = st.text_input('Shimmer:DDA')
-        spread1 = st.text_input('spread1')
+        Jitter_percent = st.text_input('MDVP:Jitter(%)',0.00784)
+        Shimmer = st.text_input('MDVP:Shimmer',0.04374)
+        DDA = st.text_input('Shimmer:DDA',0.06545)
+        spread1 = st.text_input('spread1',-4.813031)
 
     with col5:
-        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)')
-        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)')
-        NHR = st.text_input('NHR')
-        spread2 = st.text_input('spread2')
+        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)',0.00007)
+        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)',0.426)
+        NHR = st.text_input('NHR',0.02211)
+        spread2 = st.text_input('spread2',0.266482)
 
 
     parkinsons_diagnosis = ''
@@ -170,10 +170,10 @@ if selected == "Parkinsons Prediction":
 
         if parkinsons_prediction[0] == 1:
             parkinsons_diagnosis = "The person has Parkinson's disease"
-            st.error(parkinsons_prediction)
+            st.error(parkinsons_diagnosis)
         else:
             parkinsons_diagnosis = "The person does not have Parkinson's disease"
-            st.success(parkinsons_prediction)
+            st.success(parkinsons_diagnosis)
 
 
 if selected == 'Polycystic Ovarian Syndrome':
@@ -376,33 +376,4 @@ if selected == 'Next Cycle Predictor':
         else:
             st.error("unsual")
 
-            card_style = """
-                        <style>
-                        .card {
-                            padding: 20px;
-                            border-radius: 10px;
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                            background-color: #f8f9fa;
-                            margin-bottom: 20px;
-                        }
-                        .card-title {
-                            font-size: 20px;
-                            font-weight: bold;
-                            color: #333;
-                            margin-bottom: 10px;
-                        }
-                        .card-message {
-                            font-size: 16px;
-                            color: #555;
-                        }
-                        </style>
-                        """
-
-            st.markdown(card_style, unsafe_allow_html=True)
-
-            st.markdown("""
-        <div class="card">
-            <div class="card-title">Important Message</div>
-            <div class="card-message">This is a custom card displaying your message. You can use this to highlight important information or alerts in your app.</div>
-        </div>
-        """, unsafe_allow_html=True)
+           
