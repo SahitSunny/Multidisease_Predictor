@@ -7,7 +7,6 @@ from models import *
 from utils import *
 
 
-
 st.set_page_config(page_title="Health Assistant",
                    layout="wide",
                    page_icon="🧑‍⚕️")
@@ -41,7 +40,7 @@ if selected == 'Diabetes Prediction':
             'Diabetes Pedigree Function value', 1.5)
 
     with col2:
-        Glucose = st.text_input('Glucose Level',175)
+        Glucose = st.text_input('Glucose Level', 175)
         Insulin = st.text_input('Insulin Level', 300)
         Age = st.text_input('Age of the Person', 60)
 
@@ -50,7 +49,6 @@ if selected == 'Diabetes Prediction':
         BMI = st.text_input('BMI value', 50)
 
     diab_diagnosis = ''
-
 
     if st.button('Diabetes Test Result'):
 
@@ -70,13 +68,12 @@ if selected == 'Diabetes Prediction':
 
 if selected == 'Heart Disease Prediction':
 
-
     st.title('Heart Disease Prediction using ML')
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        age = st.text_input('Age',63)
+        age = st.text_input('Age', 63)
         trestbps = st.text_input('Resting Blood Pressure', 145)
         restecg = st.text_input('Resting Electrocardiographic results', 0)
         oldpeak = st.text_input('ST depression induced by exercise', 2.3)
@@ -94,9 +91,7 @@ if selected == 'Heart Disease Prediction':
         exang = st.text_input('Exercise Induced Angina', 0)
         ca = st.text_input('Major vessels colored by flourosopy', 0)
 
-
     heart_diagnosis = ''
-
 
     if st.button('Heart Disease Test Result'):
 
@@ -117,46 +112,43 @@ if selected == 'Heart Disease Prediction':
 
 if selected == "Parkinsons Prediction":
 
-
     st.title("Parkinson's Disease Prediction using ML")
 
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        fo = st.text_input('MDVP:Fo(Hz)',119.992)
-        RAP = st.text_input('MDVP:RAP',0.00370)
-        APQ3 = st.text_input('Shimmer:APQ3',0.06545)
-        HNR = st.text_input('HNR',21.033)
-        D2 = st.text_input('D2',2.301442)
+        fo = st.text_input('MDVP:Fo(Hz)', 119.992)
+        RAP = st.text_input('MDVP:RAP', 0.00370)
+        APQ3 = st.text_input('Shimmer:APQ3', 0.06545)
+        HNR = st.text_input('HNR', 21.033)
+        D2 = st.text_input('D2', 2.301442)
 
     with col2:
-        fhi = st.text_input('MDVP:Fhi(Hz)',157.302	)
-        PPQ = st.text_input('MDVP:PPQ',0.00554)
-        APQ5 = st.text_input('Shimmer:APQ5',0.02211)
-        RPDE = st.text_input('RPDE',0.414783)
-        PPE = st.text_input('PPE',0.284654)
+        fhi = st.text_input('MDVP:Fhi(Hz)', 157.302)
+        PPQ = st.text_input('MDVP:PPQ', 0.00554)
+        APQ5 = st.text_input('Shimmer:APQ5', 0.02211)
+        RPDE = st.text_input('RPDE', 0.414783)
+        PPE = st.text_input('PPE', 0.284654)
 
     with col3:
-        flo = st.text_input('MDVP:Flo(Hz)',74.997)
-        DDP = st.text_input('Jitter:DDP',0.01109)
-        APQ = st.text_input('MDVP:APQ',21.033)
-        DFA = st.text_input('DFA',0.815285)
+        flo = st.text_input('MDVP:Flo(Hz)', 74.997)
+        DDP = st.text_input('Jitter:DDP', 0.01109)
+        APQ = st.text_input('MDVP:APQ', 21.033)
+        DFA = st.text_input('DFA', 0.815285)
 
     with col4:
-        Jitter_percent = st.text_input('MDVP:Jitter(%)',0.00784)
-        Shimmer = st.text_input('MDVP:Shimmer',0.04374)
-        DDA = st.text_input('Shimmer:DDA',0.06545)
-        spread1 = st.text_input('spread1',-4.813031)
+        Jitter_percent = st.text_input('MDVP:Jitter(%)', 0.00784)
+        Shimmer = st.text_input('MDVP:Shimmer', 0.04374)
+        DDA = st.text_input('Shimmer:DDA', 0.06545)
+        spread1 = st.text_input('spread1', -4.813031)
 
     with col5:
-        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)',0.00007)
-        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)',0.426)
-        NHR = st.text_input('NHR',0.02211)
-        spread2 = st.text_input('spread2',0.266482)
-
+        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)', 0.00007)
+        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)', 0.426)
+        NHR = st.text_input('NHR', 0.02211)
+        spread2 = st.text_input('spread2', 0.266482)
 
     parkinsons_diagnosis = ''
-
 
     if st.button("Parkinson's Test Result"):
 
@@ -177,7 +169,6 @@ if selected == "Parkinsons Prediction":
 
 
 if selected == 'Polycystic Ovarian Syndrome':
-
 
     st.title('Polycystic Ovarian Syndrome Prediction')
 
@@ -290,58 +281,55 @@ if selected == 'Polycystic Ovarian Syndrome':
             st.success(outcome)
 
 
-
 if selected == 'Next Cycle Predictor':
     st.title('Next Cycle Prediction')
 
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        CycteNumber = st.number_input('Cycte Number')
-        Group = st.number_input('Group')
-        CycteWithPeakorNot = st.selectbox(
-            'Cycte With Peak or Not', [0, 1])
-        ReproductiveCategory = st.number_input('Reproductive Category')
+        CycleNumber = st.number_input('Cycle Number', 2)
+        CycleWithPeakorNot = st.selectbox(
+            'Cycle With Peak or Not', [0, 1], 1)
+        ReproductiveCategory = st.number_input('Reproductive Category', 0)
 
     with col2:
         EstimatedDayofOvulation = st.number_input(
-            'Estimated Day of Ovulation')
-        LengthofLuteatPhase = st.number_input('Length of Luteal Phase')
-        FirstDayofHigh = st.number_input('First Day of High')
+            'Estimated Day of Ovulation', 12)
+        LengthofLuteatPhase = st.number_input('Length of Luteal Phase', 8)
+        FirstDayofHigh = st.number_input('First Day of High', 9)
         TotatNumberofHighDays = st.number_input(
-            'Total Number of High Days')
+            'Total Number of High Days', 1)
 
     with col3:
-        TotatHighPostPeak = st.number_input('Total High Post Peak')
-        TotatDaysofFertitity = st.number_input('Total Days of Fertility')
+        TotatHighPostPeak = st.number_input('Total High Post Peak', 0)
+        TotatDaysofFertitity = st.number_input('Total Days of Fertility', 9)
         TotatNumberofPeakDays = st.number_input(
-            'Total Number of Peak Days')
+            'Total Number of Peak Days', 4)
         TotatFertitityFormuta = st.number_input(
-            'Total Fertility Formula')
+            'Total Fertility Formula', 11)
 
     with col4:
 
-        MensesScoreDayOne = st.number_input('Menses Score Day One')
-        MensesScoreDayTwo = st.number_input('Menses Score Day Two')
-        MensesScoreDayThree = st.number_input('Menses Score Day Three')
-        MensesScoreDayFour = st.number_input('Menses Score Day Four')
-        MensesScoreDayFive = st.number_input('Menses Score Day Five')
+        MensesScoreDayOne = st.number_input('Menses Score Day One', 0)
+        MensesScoreDayTwo = st.number_input('Menses Score Day Two', 1)
+        MensesScoreDayThree = st.number_input('Menses Score Day Three', 2)
+        MensesScoreDayFour = st.number_input('Menses Score Day Four', 1)
+        MensesScoreDayFive = st.number_input('Menses Score Day Five', 0)
 
     with col5:
-        LengthofMenses = st.number_input('Length of Menses')
-        TotatMensesScore = st.number_input('Total Menses Score')
+        LengthofMenses = st.number_input('Length of Menses', 8)
+        TotatMensesScore = st.number_input('Total Menses Score', 12)
         NumberofDaysofIntercourse = st.number_input(
-            'Number of Days of Intercourse')
+            'Number of Days of Intercourse', 4)
         IntercourseInFertiteWindow = st.selectbox(
-            'Intercourse In Fertile Window', [0, 1])
+            'Intercourse In Fertile Window', [0, 1], 1)
 
         user_date = st.date_input('Date')
 
     if st.button('Predict Date'):
         user_input = [
-            CycteNumber,
-            Group,
-            CycteWithPeakorNot,
+            CycleNumber,
+            CycleWithPeakorNot,
             ReproductiveCategory,
             EstimatedDayofOvulation,
             LengthofLuteatPhase,
@@ -376,4 +364,19 @@ if selected == 'Next Cycle Predictor':
         else:
             st.error("unsual")
 
-           
+            card_html = """
+                    <div style="
+                        border: 1px solid #536493; 
+                        border-radius: 10px; 
+                        padding: 20px; 
+                        text-align: center; 
+                        background-color: #fff;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    ">
+                        <h2 style="color: #D0A2F7;">Card Title</h2>
+                        <p style="color: #536493;">This is the message below the title in the card.</p>
+                    </div>
+                    """
+
+
+            st.markdown(card_html, unsafe_allow_html=True)
