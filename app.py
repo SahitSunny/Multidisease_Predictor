@@ -5,7 +5,11 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from models import *
 from utils import *
+import google.generativeai as genai
+import streamlit as st
 
+
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
 st.set_page_config(page_title="Health Assistant",
                    layout="wide",
@@ -20,10 +24,11 @@ with st.sidebar:
                                'Heart Disease Prediction',
                                'Parkinsons Prediction',
                                'Polycystic Ovarian Syndrome',
+                               'Chatbot'
                            ],
                            menu_icon='hospital-fill',
-                           icons=['activity', 'heart',
-                                  'person', 'person-circle'],
+                           icons=['calendar', 'circle', 'heart',
+                                  'person', 'person-circle', 'robot'],
                            default_index=0)
 
 
@@ -364,19 +369,43 @@ if selected == 'Next Cycle Predictor':
         else:
             st.error("unsual")
 
-            card_html = """
-                    <div style="
-                        border: 1px solid #536493; 
-                        border-radius: 10px; 
-                        padding: 20px; 
-                        text-align: center; 
-                        background-color: #fff;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    ">
-                        <h2 style="color: #D0A2F7;">Card Title</h2>
-                        <p style="color: #536493;">This is the message below the title in the card.</p>
-                    </div>
-                    """
 
+if selected == 'Chatbot':
+    st.title("Chatbot using Google Generative AI")
 
-            st.markdown(card_html, unsafe_allow_html=True)
+    generation_config = {
+    "temperature": 1,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_output_tokens": 8192,
+    "response_mime_type": "text/plain",
+    }
+
+    model = genai.GenerativeModel(
+    model_name="gemini-1.5-pro-002",
+    generation_config=generation_config,
+    )
+
+    if "history" not in st.session_state:
+        st.session_state.history = []
+
+    for message in st.session_state.history:
+        with st.chat_message(message['role']):
+            st.markdown(message['parts'][0]) 
+
+    if prompt := st.chat_input("What is up?"):
+        st.session_state.history.append({"role": "user", "parts": [prompt]})
+
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        chat_session = model.start_chat(history=st.session_state.history)
+
+        with st.spinner("Generating response..."):
+            response = chat_session.send_message(prompt)
+
+        assistant_message = response.text
+        with st.chat_message("assistant"):
+            st.markdown(assistant_message)
+
+        st.session_state.history.append({"role": "model", "parts": [assistant_message]})
