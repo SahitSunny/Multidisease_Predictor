@@ -39,26 +39,31 @@ if selected == 'Diabetes Prediction':
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        Pregnancies = st.text_input('Number of Pregnancies', 10)
-        SkinThickness = st.text_input('Skin Thickness value', 45)
-        DiabetesPedigreeFunction = st.text_input(
-            'Diabetes Pedigree Function value', 1.5)
+        pregnancies = st.text_input(
+            'Number of Pregnancies', placeholder='0-10')
+        skin_thickness = st.text_input(
+            'Skin Thickness (in mm)', placeholder='0-99')
+        diabetes_pedigree_function = st.text_input(
+            'Diabetes Pedigree Function', placeholder='0.0-2.5')
 
     with col2:
-        Glucose = st.text_input('Glucose Level', 175)
-        Insulin = st.text_input('Insulin Level', 300)
-        Age = st.text_input('Age of the Person', 60)
+        glucose = st.text_input(
+            'Glucose Level (in mg/dL)', placeholder='70-300')
+        insulin = st.text_input('Insulin Level (in µU/mL)', placeholder='2-25')
+        age = st.text_input('Age of the Person (in years)',
+                            placeholder='0-120')
 
     with col3:
-        BloodPressure = st.text_input('Blood Pressure value', 100)
-        BMI = st.text_input('BMI value', 50)
+        blood_pressure = st.text_input(
+            'Blood Pressure (in mmHg)', placeholder='80-200')
+        BMI = st.text_input('BMI value', placeholder='10-60')
 
     diab_diagnosis = ''
 
     if st.button('Diabetes Test Result'):
 
-        user_input = [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin,
-                      BMI, DiabetesPedigreeFunction, Age]
+        user_input = [pregnancies, glucose, blood_pressure, skin_thickness, insulin,
+                      BMI, diabetes_pedigree_function, age]
 
         user_input = [float(x) for x in user_input]
 
@@ -77,24 +82,93 @@ if selected == 'Heart Disease Prediction':
 
     col1, col2, col3 = st.columns(3)
 
+    def gender_mapper(value):
+        return 1 if value == 'Male' else 0
+
+    def chestpain_mapper(value):
+        if value == 'Typical Angina':
+            return 0
+        elif value == 'Atypical Angina':
+            return 1
+        elif value == 'Non-Anginal Pain':
+            return 2
+        else:
+            return 3
+
+    def thal_mapper(value):
+        if value == 'Normal':
+            return 0
+        elif value == 'Fixed Defect':
+            return 1
+        else:
+            return 2
+
     with col1:
-        age = st.text_input('Age', 63)
-        trestbps = st.text_input('Resting Blood Pressure', 145)
-        restecg = st.text_input('Resting Electrocardiographic results', 0)
-        oldpeak = st.text_input('ST depression induced by exercise', 2.3)
-        thal = st.text_input(
-            'thal: 0 = normal; 1 = fixed defect; 2 = reversable defect', 1)
+        age = st.text_input('Age', placeholder='0-120')
+        trestbps = st.text_input(
+            'Resting Blood Pressure (in mmHg)', placeholder='90-200')
+        restecg = st.text_input(
+            'Resting Electrocardiographic Results', placeholder='0-2')
+        oldpeak = st.text_input(
+            'ST Depression Induced by Exercise (in mm)', placeholder='0.0-6.0')
+        thal = thal_mapper(st.selectbox(
+            'Thal: ',
+            options=[
+                'Normal',
+                'Fixed Defect',
+                'Reversible Defect'
+            ],
+            index=0
+        ))
 
     with col2:
-        sex = st.text_input('Sex', 1)
-        chol = st.text_input('Serum Cholestoral in mg/dl', 233)
-        thalach = st.text_input('Maximum Heart Rate achieved', 150)
-        slope = st.text_input('Slope of the peak exercise ST segment', 0)
+        sex = gender_mapper(st.selectbox(
+            'Sex',
+            options=[
+                'Male',
+                'Female'
+            ],
+            index=0
+        ))
+        chol = st.text_input(
+            'Serum Cholesterol (in mg/dL)', placeholder='100-400')
+        thalach = st.text_input(
+            'Maximum Heart Rate Achieved (in bpm)', placeholder='60-220')
+        slope = st.text_input(
+            'Slope of the Peak Exercise ST Segment', placeholder='0-2')
+
     with col3:
-        cp = st.text_input('Chest Pain types', 3)
-        fbs = st.text_input('Fasting Blood Sugar > 120 mg/dl', 1)
-        exang = st.text_input('Exercise Induced Angina', 0)
-        ca = st.text_input('Major vessels colored by flourosopy', 0)
+        cp = chestpain_mapper(st.selectbox(
+            'Chest Pain Types',
+            options=[
+                'Typical Angina',
+                'Atypical Angina',
+                'Non-Anginal Pain',
+                'Asymptomatic'
+            ],
+            index=0
+        ))
+
+        fbs = yes_no_mapper(st.selectbox(
+            'Fasting Blood Sugar > 120 mg/dL',
+            options=[
+                'Yes',
+                'No'
+            ],
+            index=0
+        ))
+
+# Dropdown for Exercise Induced Angina
+        exang = yes_no_mapper(st.selectbox(
+            'Exercise Induced Angina',
+            options=[
+                'Yes',
+                'No'
+            ],
+            index=0
+        ))
+        ca = st.text_input(
+            'Major Vessels Colored by Fluoroscopy', placeholder='0-3')
 
     heart_diagnosis = ''
 
@@ -122,36 +196,36 @@ if selected == "Parkinsons Prediction":
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        fo = st.text_input('MDVP:Fo(Hz)', 119.992)
-        RAP = st.text_input('MDVP:RAP', 0.00370)
-        APQ3 = st.text_input('Shimmer:APQ3', 0.06545)
-        HNR = st.text_input('HNR', 21.033)
-        D2 = st.text_input('D2', 2.301442)
-
+        fo = st.text_input('MDVP:Fo (Hz)', placeholder='100-250 Hz')
+        RAP = st.text_input('MDVP:RAP', placeholder='0.0-0.5')
+        APQ3 = st.text_input('Shimmer:APQ3', placeholder='0.0-0.2')
+        HNR = st.text_input('HNR', placeholder='10-30')
+        D2 = st.text_input('D2', placeholder='1.0-4.0')
     with col2:
-        fhi = st.text_input('MDVP:Fhi(Hz)', 157.302)
-        PPQ = st.text_input('MDVP:PPQ', 0.00554)
-        APQ5 = st.text_input('Shimmer:APQ5', 0.02211)
-        RPDE = st.text_input('RPDE', 0.414783)
-        PPE = st.text_input('PPE', 0.284654)
+        fhi = st.text_input('MDVP:Fhi (Hz)', placeholder='150-200 Hz')
+        PPQ = st.text_input('MDVP:PPQ', placeholder='0.0-0.1')
+        APQ5 = st.text_input('Shimmer:APQ5', placeholder='0.0-0.1')
+        RPDE = st.text_input('RPDE', placeholder='0.0-1.0')
+        PPE = st.text_input('PPE', placeholder='0.0-1.0')
 
     with col3:
-        flo = st.text_input('MDVP:Flo(Hz)', 74.997)
-        DDP = st.text_input('Jitter:DDP', 0.01109)
-        APQ = st.text_input('MDVP:APQ', 21.033)
-        DFA = st.text_input('DFA', 0.815285)
+        flo = st.text_input('MDVP:Flo (Hz)', placeholder='70-100 Hz')
+        DDP = st.text_input('Jitter:DDP', placeholder='0.0-0.02')
+        APQ = st.text_input('MDVP:APQ', placeholder='20-30')
+        DFA = st.text_input('DFA', placeholder='0.0-1.0')
 
     with col4:
-        Jitter_percent = st.text_input('MDVP:Jitter(%)', 0.00784)
-        Shimmer = st.text_input('MDVP:Shimmer', 0.04374)
-        DDA = st.text_input('Shimmer:DDA', 0.06545)
-        spread1 = st.text_input('spread1', -4.813031)
+        Jitter_percent = st.text_input(
+            'MDVP:Jitter (%)', placeholder='0.0-0.1')
+        Shimmer = st.text_input('MDVP:Shimmer', placeholder='0.0-0.1')
+        DDA = st.text_input('Shimmer:DDA', placeholder='0.0-0.1')
+        spread1 = st.text_input('spread1', placeholder='-5.0 to 0.0')
 
     with col5:
-        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)', 0.00007)
-        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)', 0.426)
-        NHR = st.text_input('NHR', 0.02211)
-        spread2 = st.text_input('spread2', 0.266482)
+        Jitter_Abs = st.text_input('MDVP:Jitter (Abs)', placeholder='0.0-0.1')
+        Shimmer_dB = st.text_input('MDVP:Shimmer (dB)', placeholder='0.0-1.0')
+        NHR = st.text_input('NHR', placeholder='0.0-0.1')
+        spread2 = st.text_input('spread2', placeholder='0.0-1.0')
 
     parkinsons_diagnosis = ''
 
@@ -180,56 +254,116 @@ if selected == 'Polycystic Ovarian Syndrome':
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        age = st.text_input('Age (in years)')
-        weight = st.text_input('Weight (in kilograms)')
-        height = st.text_input('Height (in centimeters)')
-        bmi = st.text_input('BMI (Body Mass Index)')
-        blood_group_input = (st.text_input('Blood Group'))
-        blood_group = blood_group_mapper(blood_group_input)
-        skin_darkening = yes_no_mapper(
-            st.text_input('Skin Darkening (Yes/No)'))
-        hair_loss = yes_no_mapper(st.text_input('Hair Loss (Yes/No)'))
-        avg_f_size_r = st.text_input('Average Follicle Size (Right in mm)')
-        endometrium = st.text_input('Endometrium Thickness (in mm)')
+        age = st.text_input(placeholder='1-100', label='Age (in years)')
+        weight = st.text_input('Weight (in kilograms)', placeholder='45-150')
+        height = st.text_input('Height (in centimeters)',
+                               placeholder='150-190')
+        bmi = st.text_input('BMI (Body Mass Index)', placeholder='18.5-40')
+
+        blood_group = blood_group_mapper(st.selectbox(
+            'Select Blood Group',
+            options=[
+                'A+',
+                'A-',
+                'B+',
+                'B-',
+                'AB+',
+                'AB-',
+                'O+',
+                'O-'
+            ],
+            index=0
+        ))
+        skin_darkening = yes_no_mapper(st.selectbox(
+            'Skin Darkening',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        hair_loss = yes_no_mapper(st.selectbox(
+            'Hair Loss',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        avg_f_size_r = st.text_input(
+            'Average Follicle Size (Right in mm)', placeholder='5-20')
+        endometrium = st.text_input(
+            'Endometrium Thickness (in mm)', placeholder='5-15')
 
     with col2:
-        pulse_rate = st.text_input('Pulse Rate (beats per minute)')
-        rr_breaths = st.text_input('Respiratory Rate ')
-        hb = st.text_input('Hemoglobin ')
-        cycle = st.text_input('Cycle Regular/Irregular (R/I)')
-        cycle_length = st.text_input('Cycle Length (in days)')
-        pimples = yes_no_mapper(st.text_input('Pimples (Yes/No)'))
-        fast_food = yes_no_mapper(st.text_input(
-            'Fast Food Consumption (Yes/No)'))
+        pulse_rate = st.text_input(
+            'Pulse Rate (beats per minute)', placeholder='60-100')
+        rr_breaths = st.text_input(
+            'Respiratory Rate (breaths per minute)', placeholder='12-20')
+        hb = st.text_input('Hemoglobin (g/dL)', placeholder='12-18')
+        cycle = st.text_input('Cycle Regular/Irregular (R/I)',
+                              placeholder='Regular or Irregular')
+        cycle_length = st.text_input(
+            'Cycle Length (in days)', placeholder='21-35')
+        pimples = yes_no_mapper(st.selectbox(
+            'Pimples',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        fast_food = yes_no_mapper(st.selectbox(
+            'Fast Food Consumption',
+            options=['Yes', 'No'],
+            index=0
+        ))
 
     with col3:
-        marriage_status = st.text_input('Marriage Status (in years)')
-        pregnant = yes_no_mapper(st.text_input('Pregnant (Yes/No)'))
-        abortions = st.text_input('Number of Abortions')
-        fsh = st.text_input('Follicle Stimulating Hormone')
-        lh = st.text_input('Luteinizing Hormone')
-        reg_exercise = yes_no_mapper(
-            st.text_input('Regular Exercise (Yes/No)'))
-        bp_systolic = st.text_input('Systolic Blood Pressure (mmHg)')
+        marriage_status = st.text_input(
+            'Marriage Status (in years)', placeholder='0-50')
+        pregnant = yes_no_mapper(st.selectbox(
+            'Pregnant',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        abortions = st.text_input('Number of Abortions', placeholder='0-10')
+        fsh = st.text_input(
+            'Follicle Stimulating Hormone (mIU/mL)', placeholder='1-12')
+        lh = st.text_input('Luteinizing Hormone (mIU/mL)', placeholder='1-25')
+        reg_exercise = yes_no_mapper(st.selectbox(
+            'Regular Exercise',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        bp_systolic = st.text_input(
+            'Systolic Blood Pressure (mmHg)', placeholder='90-180')
 
     with col4:
-        hip = st.text_input('Hip Measurement (in inches)')
-        waist = st.text_input('Waist Measurement (in inches)')
-        tsh = st.text_input('Thyroid Stimulating Hormone')
-        amh = st.text_input('Anti-Müllerian Hormone')
-        prl = st.text_input('Prolactin (PRL in ng/mL)')
-        bp_diastolic = st.text_input('Diastolic Blood Pressure (mmHg)')
-        follicle_no_l = st.text_input('Number of Follicles (Left)')
+        hip = st.text_input('Hip Measurement (in inches)', placeholder='28-50')
+        waist = st.text_input(
+            'Waist Measurement (in inches)', placeholder='24-40')
+        tsh = st.text_input(
+            'Thyroid Stimulating Hormone (µIU/mL)', placeholder='0.5-4.5')
+        amh = st.text_input(
+            'Anti-Müllerian Hormone (ng/mL)', placeholder='0.1-10')
+        prl = st.text_input('Prolactin (PRL in ng/mL)', placeholder='5-25')
+        bp_diastolic = st.text_input(
+            'Diastolic Blood Pressure (mmHg)', placeholder='60-100')
+        follicle_no_l = st.text_input(
+            'Number of Follicles (Left)', placeholder='0-30')
 
     with col5:
-        vit_d3 = st.text_input('Vitamin D3 (in ng/mL)')
-        prg = st.text_input('Progesterone (PRG in ng/mL)')
-        rbs = st.text_input('Random Blood Sugar')
-        weight_gain = yes_no_mapper(st.text_input('Weight Gain (Yes/No)'))
-        hair_growth = yes_no_mapper(
-            st.text_input('Excess Hair Growth (Yes/No)'))
-        follicle_no_r = st.text_input('Number of Follicles (Right)')
-        avg_f_size_l = st.text_input('Average Follicle Size (Left in mm)')
+        vit_d3 = st.text_input('Vitamin D3 (in ng/mL)', placeholder='20-100')
+        prg = st.text_input('Progesterone (PRG in ng/mL)',
+                            placeholder='0.1-20')
+        rbs = st.text_input('Random Blood Sugar (in mg/dL)',
+                            placeholder='70-200')
+        weight_gain = yes_no_mapper(st.selectbox(
+            'Weight Gain',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        hair_growth = yes_no_mapper(st.selectbox(
+            'Excess Hair Growth',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        follicle_no_r = st.text_input(
+            'Number of Follicles (Right)', placeholder='0-30')
+        avg_f_size_l = st.text_input(
+            'Average Follicle Size (Left in mm)', placeholder='5-20')
 
     outcome = ''
 
@@ -291,45 +425,82 @@ if selected == 'Next Cycle Predictor':
 
     col1, col2, col3, col4, col5 = st.columns(5)
 
+    reproductive_categories = [
+        'Adolescent',
+        'Reproductive',
+        'Perimenopausal',
+        'Menopausal'
+    ]
+
+    def reproductive_category_mapper(value):
+        mapping = {
+            'Adolescent': 0,
+            'Reproductive': 1,
+            'Perimenopausal': 2,
+            'Menopausal': 3
+        }
+        return mapping.get(value, None)
+
     with col1:
-        CycleNumber = st.number_input('Cycle Number', 2)
-        CycleWithPeakorNot = st.selectbox(
-            'Cycle With Peak or Not', [0, 1], 1)
-        ReproductiveCategory = st.number_input('Reproductive Category', 0)
+        CycleNumber = st.number_input('Cycle Number (e.g., 1)', 0)
+        CycleWithPeakorNot = yes_no_mapper(st.selectbox(
+            'Cycle With Peak or Not',
+            options=['Yes', 'No'],
+            index=0
+        ))
+        ReproductiveCategory = reproductive_category_mapper(st.selectbox(
+            'Reproductive Category',
+            options=reproductive_categories,
+            index=0
+        ))
 
     with col2:
         EstimatedDayofOvulation = st.number_input(
-            'Estimated Day of Ovulation', 12)
-        LengthofLuteatPhase = st.number_input('Length of Luteal Phase', 8)
-        FirstDayofHigh = st.number_input('First Day of High', 9)
+            'Estimated Day of Ovulation (1-30)', min_value=1, max_value=30)
+        LengthofLuteatPhase = st.number_input(
+            'Length of Luteal Phase (1-20 days)', min_value=1, max_value=20)
+        FirstDayofHigh = st.number_input(
+            'First Day of High (1-30)', min_value=1, max_value=30)
         TotatNumberofHighDays = st.number_input(
-            'Total Number of High Days', 1)
+            'Total Number of High Days (1-20)', min_value=1, max_value=20)
 
     with col3:
-        TotatHighPostPeak = st.number_input('Total High Post Peak', 0)
-        TotatDaysofFertitity = st.number_input('Total Days of Fertility', 9)
+        TotatHighPostPeak = st.number_input(
+            'Total High Post Peak (0)', min_value=0)
+        TotatDaysofFertitity = st.number_input(
+            'Total Days of Fertility (1-30)', min_value=1, max_value=30)
         TotatNumberofPeakDays = st.number_input(
-            'Total Number of Peak Days', 4)
+            'Total Number of Peak Days (1-20)', min_value=1, max_value=20)
         TotatFertitityFormuta = st.number_input(
-            'Total Fertility Formula', 11)
+            'Total Fertility Formula (1-15)', min_value=1, max_value=15)
 
     with col4:
-
-        MensesScoreDayOne = st.number_input('Menses Score Day One', 0)
-        MensesScoreDayTwo = st.number_input('Menses Score Day Two', 1)
-        MensesScoreDayThree = st.number_input('Menses Score Day Three', 2)
-        MensesScoreDayFour = st.number_input('Menses Score Day Four', 1)
-        MensesScoreDayFive = st.number_input('Menses Score Day Five', 0)
+        MensesScoreDayOne = st.number_input(
+            'Menses Score Day One (0-10)', min_value=0, max_value=10)
+        MensesScoreDayTwo = st.number_input(
+            'Menses Score Day Two (0-10)', min_value=0, max_value=10)
+        MensesScoreDayThree = st.number_input(
+            'Menses Score Day Three (0-10)', min_value=0, max_value=10)
+        MensesScoreDayFour = st.number_input(
+            'Menses Score Day Four (0-10)', min_value=0, max_value=10)
+        MensesScoreDayFive = st.number_input(
+            'Menses Score Day Five (0-10)', min_value=0, max_value=10)
 
     with col5:
-        LengthofMenses = st.number_input('Length of Menses', 8)
-        TotatMensesScore = st.number_input('Total Menses Score', 12)
+        LengthofMenses = st.number_input(
+            'Length of Menses (1-14 days)', min_value=1, max_value=14)
+        TotatMensesScore = st.number_input(
+            'Total Menses Score (0-30)', min_value=0, max_value=30)
         NumberofDaysofIntercourse = st.number_input(
-            'Number of Days of Intercourse', 4)
-        IntercourseInFertiteWindow = st.selectbox(
-            'Intercourse In Fertile Window', [0, 1], 1)
+            'Number of Days of Intercourse (0-30)', min_value=0, max_value=30)
 
+        IntercourseInFertileWindow = yes_no_mapper(st.selectbox(
+            'Intercourse In Fertile Window',
+            options=['Yes', 'No'],
+            index=0
+        ))
         user_date = st.date_input('Date')
+
 
     if st.button('Predict Date'):
         user_input = [
@@ -352,7 +523,7 @@ if selected == 'Next Cycle Predictor':
             MensesScoreDayFive,
             TotatMensesScore,
             NumberofDaysofIntercourse,
-            IntercourseInFertiteWindow
+            IntercourseInFertileWindow
         ]
 
         user_input = [float(x) for x in user_input]
@@ -374,16 +545,16 @@ if selected == 'Chatbot':
     st.title("Chatbot using Google Generative AI")
 
     generation_config = {
-    "temperature": 1,
-    "top_p": 0.95,
-    "top_k": 40,
-    "max_output_tokens": 8192,
-    "response_mime_type": "text/plain",
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": 40,
+        "max_output_tokens": 8192,
+        "response_mime_type": "text/plain",
     }
 
     model = genai.GenerativeModel(
-    model_name="gemini-1.5-pro-002",
-    generation_config=generation_config,
+        model_name="gemini-1.5-pro-002",
+        generation_config=generation_config,
     )
 
     if "history" not in st.session_state:
@@ -391,7 +562,7 @@ if selected == 'Chatbot':
 
     for message in st.session_state.history:
         with st.chat_message(message['role']):
-            st.markdown(message['parts'][0]) 
+            st.markdown(message['parts'][0])
 
     if prompt := st.chat_input("What is up?"):
         st.session_state.history.append({"role": "user", "parts": [prompt]})
@@ -408,4 +579,5 @@ if selected == 'Chatbot':
         with st.chat_message("assistant"):
             st.markdown(assistant_message)
 
-        st.session_state.history.append({"role": "model", "parts": [assistant_message]})
+        st.session_state.history.append(
+            {"role": "model", "parts": [assistant_message]})
