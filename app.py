@@ -158,7 +158,6 @@ if selected == 'Heart Disease Prediction':
             index=0
         ))
 
-# Dropdown for Exercise Induced Angina
         exang = yes_no_mapper(st.selectbox(
             'Exercise Induced Angina',
             options=[
@@ -201,6 +200,7 @@ if selected == "Parkinsons Prediction":
         APQ3 = st.text_input('Shimmer:APQ3', placeholder='0.0-0.2')
         HNR = st.text_input('HNR', placeholder='10-30')
         D2 = st.text_input('D2', placeholder='1.0-4.0')
+
     with col2:
         fhi = st.text_input('MDVP:Fhi (Hz)', placeholder='150-200 Hz')
         PPQ = st.text_input('MDVP:PPQ', placeholder='0.0-0.1')
@@ -258,43 +258,22 @@ if selected == 'Polycystic Ovarian Syndrome':
         weight = st.text_input('Weight (in kilograms)', placeholder='45-150')
         height = st.text_input('Height (in centimeters)',
                                placeholder='150-190')
-        bmi = st.text_input('BMI (Body Mass Index)', placeholder='18.5-40')
-
-        blood_group = blood_group_mapper(st.selectbox(
-            'Select Blood Group',
-            options=[
-                'A+',
-                'A-',
-                'B+',
-                'B-',
-                'AB+',
-                'AB-',
-                'O+',
-                'O-'
-            ],
-            index=0
-        ))
+       
         skin_darkening = yes_no_mapper(st.selectbox(
             'Skin Darkening',
             options=['Yes', 'No'],
             index=0
         ))
         hair_loss = yes_no_mapper(st.selectbox(
-            'Hair Loss',
+            'Hair loss',
             options=['Yes', 'No'],
             index=0
         ))
-        avg_f_size_r = st.text_input(
-            'Average Follicle Size (Right in mm)', placeholder='5-20')
-        endometrium = st.text_input(
-            'Endometrium Thickness (in mm)', placeholder='5-15')
+       
 
     with col2:
-        pulse_rate = st.text_input(
-            'Pulse Rate (beats per minute)', placeholder='60-100')
-        rr_breaths = st.text_input(
-            'Respiratory Rate (breaths per minute)', placeholder='12-20')
-        hb = st.text_input('Hemoglobin (g/dL)', placeholder='12-18')
+        
+       
         cycle = st.text_input('Cycle Regular/Irregular (R/I)',
                               placeholder='Regular or Irregular')
         cycle_length = st.text_input(
@@ -304,15 +283,15 @@ if selected == 'Polycystic Ovarian Syndrome':
             options=['Yes', 'No'],
             index=0
         ))
-        fast_food = yes_no_mapper(st.selectbox(
-            'Fast Food Consumption',
-            options=['Yes', 'No'],
-            index=0
-        ))
+        endometrium = st.text_input(
+            'Endometrium Thickness (in mm)', placeholder='5-15')
+        
+        avg_f_size_l = st.text_input(
+            'Average Follicle Size (Left in mm)', placeholder='5-20')
+       
 
     with col3:
-        marriage_status = st.text_input(
-            'Marriage Status (in years)', placeholder='0-50')
+       
         pregnant = yes_no_mapper(st.selectbox(
             'Pregnant',
             options=['Yes', 'No'],
@@ -320,24 +299,17 @@ if selected == 'Polycystic Ovarian Syndrome':
         ))
         abortions = st.text_input('Number of Abortions', placeholder='0-10')
         fsh = st.text_input(
-            'Follicle Stimulating Hormone (mIU/mL)', placeholder='1-12')
+            'Follicle Stimulating Hormone ', placeholder='1-12')
         lh = st.text_input('Luteinizing Hormone (mIU/mL)', placeholder='1-25')
-        reg_exercise = yes_no_mapper(st.selectbox(
-            'Regular Exercise',
-            options=['Yes', 'No'],
-            index=0
-        ))
+       
         bp_systolic = st.text_input(
             'Systolic Blood Pressure (mmHg)', placeholder='90-180')
 
     with col4:
-        hip = st.text_input('Hip Measurement (in inches)', placeholder='28-50')
-        waist = st.text_input(
-            'Waist Measurement (in inches)', placeholder='24-40')
         tsh = st.text_input(
-            'Thyroid Stimulating Hormone (µIU/mL)', placeholder='0.5-4.5')
+            'Thyroid Stimulating Hormone', placeholder='0.5-4.5')
         amh = st.text_input(
-            'Anti-Müllerian Hormone (ng/mL)', placeholder='0.1-10')
+            'Anti-Mullerian Hormone (ng/mL)', placeholder='0.1-10')
         prl = st.text_input('Prolactin (PRL in ng/mL)', placeholder='5-25')
         bp_diastolic = st.text_input(
             'Diastolic Blood Pressure (mmHg)', placeholder='60-100')
@@ -360,10 +332,8 @@ if selected == 'Polycystic Ovarian Syndrome':
             options=['Yes', 'No'],
             index=0
         ))
-        follicle_no_r = st.text_input(
-            'Number of Follicles (Right)', placeholder='0-30')
-        avg_f_size_l = st.text_input(
-            'Average Follicle Size (Left in mm)', placeholder='5-20')
+       
+       
 
     outcome = ''
 
@@ -372,20 +342,12 @@ if selected == 'Polycystic Ovarian Syndrome':
             age,
             weight,
             height,
-            bmi,
-            blood_group,
-            pulse_rate,
-            rr_breaths,
-            hb,
             cycle,
             cycle_length,
-            marriage_status,
             pregnant,
             abortions,
             fsh,
             lh,
-            hip,
-            waist,
             tsh,
             amh,
             prl,
@@ -397,14 +359,10 @@ if selected == 'Polycystic Ovarian Syndrome':
             skin_darkening,
             hair_loss,
             pimples,
-            fast_food,
-            reg_exercise,
             bp_systolic,
             bp_diastolic,
             follicle_no_l,
-            follicle_no_r,
             avg_f_size_l,
-            avg_f_size_r,
             endometrium
         ]
 
@@ -453,12 +411,13 @@ if selected == 'Next Cycle Predictor':
             options=reproductive_categories,
             index=0
         ))
+        user_date = st.date_input('Date')
 
     with col2:
         EstimatedDayofOvulation = st.number_input(
-            'Estimated Day of Ovulation (1-30)', min_value=1, max_value=30)
+            'Day of Ovulation (1-30)', min_value=1, max_value=30)
         LengthofLuteatPhase = st.number_input(
-            'Length of Luteal Phase (1-20 days)', min_value=1, max_value=20)
+            'Luteal Phase (1-20 days)', min_value=1, max_value=20)
         FirstDayofHigh = st.number_input(
             'First Day of High (1-30)', min_value=1, max_value=30)
         TotatNumberofHighDays = st.number_input(
@@ -492,14 +451,14 @@ if selected == 'Next Cycle Predictor':
         TotatMensesScore = st.number_input(
             'Total Menses Score (0-30)', min_value=0, max_value=30)
         NumberofDaysofIntercourse = st.number_input(
-            'Number of Days of Intercourse (0-30)', min_value=0, max_value=30)
+            'Days of Intercourse (0-30)', min_value=0, max_value=30)
 
         IntercourseInFertileWindow = yes_no_mapper(st.selectbox(
             'Intercourse In Fertile Window',
             options=['Yes', 'No'],
             index=0
         ))
-        user_date = st.date_input('Date')
+       
 
 
     if st.button('Predict Date'):

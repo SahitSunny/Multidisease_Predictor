@@ -15,7 +15,7 @@ parkinsons_model = pickle.load(
     open(f'{working_dir}/saved_models/parkinsons_model.sav', 'rb'))
 
 pco_model = pickle.load(
-    open(f'{working_dir}/saved_models/pco_model.pkl', 'rb'))
+    open(f'{working_dir}/saved_models/pcos.pkl', 'rb'))
 
 cycle_model = pickle.load(
     open(f'{working_dir}/saved_models/date_predictor.pkl', 'rb')
