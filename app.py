@@ -7,6 +7,13 @@ from models import *
 from utils import *
 import google.generativeai as genai
 import streamlit as st
+from tensorflow.keras.models import load_model
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+from tensorflow.keras.preprocessing.image import img_to_array
+import cv2
+import numpy as np
+from PIL import Image
+import io
 
 
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
@@ -24,6 +31,7 @@ with st.sidebar:
                                'Heart Disease Prediction',
                                'Parkinsons Prediction',
                                'Polycystic Ovarian Syndrome',
+                               'PCOS Using CNN',
                                'Chatbot'
                            ],
                            menu_icon='hospital-fill',
@@ -258,7 +266,6 @@ if selected == 'Polycystic Ovarian Syndrome':
         weight = st.text_input('Weight (in kilograms)', placeholder='45-150')
         height = st.text_input('Height (in centimeters)',
                                placeholder='150-190')
-       
         skin_darkening = yes_no_mapper(st.selectbox(
             'Skin Darkening',
             options=['Yes', 'No'],
@@ -272,8 +279,6 @@ if selected == 'Polycystic Ovarian Syndrome':
        
 
     with col2:
-        
-       
         cycle = st.text_input('Cycle Regular/Irregular (R/I)',
                               placeholder='Regular or Irregular')
         cycle_length = st.text_input(
@@ -291,7 +296,6 @@ if selected == 'Polycystic Ovarian Syndrome':
        
 
     with col3:
-       
         pregnant = yes_no_mapper(st.selectbox(
             'Pregnant',
             options=['Yes', 'No'],
@@ -332,8 +336,6 @@ if selected == 'Polycystic Ovarian Syndrome':
             options=['Yes', 'No'],
             index=0
         ))
-       
-       
 
     outcome = ''
 
@@ -500,6 +502,9 @@ if selected == 'Next Cycle Predictor':
             st.error("unsual")
 
 
+
+
+
 if selected == 'Chatbot':
     st.title("Chatbot using Google Generative AI")
 
@@ -540,3 +545,95 @@ if selected == 'Chatbot':
 
         st.session_state.history.append(
             {"role": "model", "parts": [assistant_message]})
+
+
+if selected == 'PCOS Using CNN':
+    st.title("PCOS Detection using Image Proccessing")
+
+    model = load_model("saved_models/facemodel.h5")
+
+    def calculate_bmi(weight, height):
+        try:
+            return weight / (height ** 2)
+        except ZeroDivisionError:
+            return None
+
+    def bmi_category(bmi):
+        if bmi is None:
+            return "Invalid"
+        if bmi < 18.5:
+            return "Underweight"
+        elif 18.5 <= bmi < 24.9:
+            return "Normal"
+        elif 25 <= bmi < 29.9:
+            return "Overweight"
+        elif 30 <= bmi < 34.9:
+            return "Obesity Class 1"
+        elif 35 <= bmi < 39.9:
+            return "Obesity Class 2"
+        else:
+            return "Obesity Class 3"
+
+
+    def pcos_risk_analysis(bmi, acne_detected, hair_growth_detected):
+        if bmi and bmi > 25 and acne_detected and hair_growth_detected:
+            return "High"
+        else:
+            return "Low"
+
+    def detect_acne(image):
+        try:
+            face = image.convert('RGB')
+            face = face.resize((224, 224))
+            face = img_to_array(face)
+            face = preprocess_input(face)
+            face = np.expand_dims(face, axis=0)
+
+            # Make prediction
+            (acne, withoutAcne) = model.predict(face)[0]
+            return acne > withoutAcne, max(acne, withoutAcne) * 100  # Returns True if acne is detected, and the confidence score
+        except Exception as e:
+            st.error(f"Acne detection error: {str(e)}")
+            return False, 0.0
+
+    def detect_hair_growth(image):
+        return True
+
+
+
+    weight = st.number_input("Weight (kg):", min_value=1.0, max_value=200.0)
+    height = st.number_input("Height (m):", min_value=0.5, max_value=2.5)
+    cycle_length = st.number_input("Menstrual Cycle Length (days):", min_value=1, max_value=60)
+    sleep_hours = st.number_input("Average Sleep Hours:", min_value=0, max_value=24)
+
+    acne_choice = st.selectbox("Do you have acne?", ("No", "Yes"))
+    hair_growth_choice = st.selectbox("Do you have excessive hair growth?", ("No", "Yes"))
+
+    image_option = st.radio("Choose image source:", ("Upload Image", "Use Camera"))
+
+    if image_option == "Upload Image":
+        uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
+    else:
+        uploaded_image = st.camera_input("Take a picture")
+
+
+    if st.button("Check PCOS Risk"):
+        try:
+            bmi = calculate_bmi(weight, height)
+            bmi_cat = bmi_category(bmi)
+            
+            acne_detected = False
+            hair_growth_detected = hair_growth_choice == "Yes"
+            
+            if uploaded_image is not None:
+                img = Image.open(uploaded_image)
+                acne_detected, acne_confidence = detect_acne(img)
+                st.write(f"Acne detected: {'Yes' if acne_detected else 'No'} with confidence {acne_confidence:.2f}%")
+
+            pcos_risk = pcos_risk_analysis(bmi, acne_detected, hair_growth_detected)
+            
+            st.write(f"BMI: {bmi:.2f} ({bmi_cat})")
+            st.write(f"PCOS Risk: {pcos_risk}")
+        
+        except Exception as e:
+            st.error(f"Error: {str(e)}")
